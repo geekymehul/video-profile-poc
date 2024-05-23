@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 
 // let mimeType = 'video/webm;codecs=h264';
-// let mimeType = "video/x-matroska;codecs=avc1";
-let mimeType = 'video/webm;codecs=vp9';
+let mimeType = "video/x-matroska;codecs=avc1";
+// let mimeType = 'video/webm;codecs=vp9';
 
 
 
@@ -19,7 +19,6 @@ const NativeVideoRecorder =(props) => {
 
   const handleRecording = async () => {
     setBlob(null);
-    setVideoUrl(null);
     navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
       noiseSuppression: true} }).then(mediaStream => {
         // create the recorder
@@ -65,7 +64,7 @@ const NativeVideoRecorder =(props) => {
 
   return (
     <div className="video">
-      <div>Video Recording</div>
+      <div>AVC1 Video Recording</div>
       <header className="video-header">
         <button onClick={handleRecording}>start</button>
         <button onClick={handleStop}>stop</button>
@@ -81,6 +80,7 @@ const NativeVideoRecorder =(props) => {
         </> : <video ref={refRecordingElem}
                 style={{ width: "350px" }}
                 controls
+                muted
                 autoPlay />}
       </header>
     </div>
