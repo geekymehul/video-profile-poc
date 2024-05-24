@@ -20,14 +20,16 @@ const NativeVideoRecorder =(props) => {
   const handleRecording = async () => {
     setBlob(null);
     setVideoUrl(null);
+    let options;
+    if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
+      options = {mimeType: 'video/webm; codecs=vp9'};
+  } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+    options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
+  }
     navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
       noiseSuppression: true} }).then(mediaStream => {
         // create the recorder
-        recorderRef.current = new MediaRecorder(mediaStream, {
-          mimeType,
-          // audioBitsPerSecond: 128 * 1000, // 128 kbit/s
-          // videoBitsPerSecond: 2 * 1000 * 1000, // 2 Mbit/s
-        });
+        recorderRef.current = new MediaRecorder(mediaStream, options);
         setStream(mediaStream);
         // starts recording
         recorderRef.current.start();
