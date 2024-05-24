@@ -2,7 +2,7 @@ import './App.css';
 import AudioRecorder from "./audioRecorder";
 import NativeVideoRecorder from "./nativeVideoRecorder";
 import VideoRecorder from "./videoRecorder";
-import ACVideoRecorder from "./AVNativeVideo";
+import VideoRecordLib from "./VideoRecordLib";
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <AudioRecorder></AudioRecorder>
       <VideoRecorder></VideoRecorder>
       <NativeVideoRecorder></NativeVideoRecorder>
-      <ACVideoRecorder></ACVideoRecorder>
+      <VideoRecordLib></VideoRecordLib>
     </div>
   );
 }

@@ -82,7 +82,6 @@ const NativeVideoRecorder =(props) => {
           <a download href={videoUrl}>Native Download Recording</a>
         </> : <video ref={refRecordingElem}
                 style={{ width: "350px" }}
-                controls
                 autoPlay />}
       </header>
     </div>
