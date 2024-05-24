@@ -26,7 +26,8 @@ const NativeVideoRecorder =(props) => {
       options = {mimeType: 'video/webm; codecs=vp9'};
   } else if (MediaRecorder.isTypeSupported('video/mp4')) {
     mimeType = 'video/mp4';
-    options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
+    // options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
+    options = {mimeType: 'video/mp4'};
   } else {
     alert("Recording Media is not supported in your device!")
   }
