@@ -74,7 +74,7 @@ const NativeVideoRecorder =(props) => {
 
     return <>
         <div>Video-Record Library</div>
-        <video id="myVideo" playsinline className="video-js vjs-default-skin"></video>
+        <video id="myVideo" playsInline className="video-js vjs-default-skin"></video>
         {/* {videoUrl ? <video
             src={videoUrl}
             controls
