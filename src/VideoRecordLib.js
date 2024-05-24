@@ -25,7 +25,7 @@ const NativeVideoRecorder =(props) => {
             width: 320,
             height: 240,
             fluid: false,
-            videoMimeType: videoMimeType.current,
+            // videoMimeType: videoMimeType.current,
             plugins: {
                 record: {
                     audio: true,
@@ -64,7 +64,7 @@ const NativeVideoRecorder =(props) => {
             player.record().saveAs({'video': 'my-video-file-name.webm'});
             setIsVideo(player.recordedData);
             //creates a blob file from the videochunks data
-            const videoBlob = new Blob(player.recordedData, { type: videoMimeType.current });
+            const videoBlob = new Blob(player.recordedData);
             //creates a playable URL from the blob file.
             const videoDownUrl = URL.createObjectURL(videoBlob);
             setVideoUrl(videoDownUrl);
@@ -74,12 +74,13 @@ const NativeVideoRecorder =(props) => {
 
     return <>
         <div>Video-Record Library</div>
-        {videoUrl ? <video
+        <video id="myVideo" playsinline className="video-js vjs-default-skin"></video>
+        {/* {videoUrl ? <video
             src={videoUrl}
             controls
             autoPlay
             style={{ width: "350px" }}
-          /> : <video id="myVideo" playsinline className="video-js vjs-default-skin"></video>}
+          /> : <video id="myVideo" playsinline className="video-js vjs-default-skin"></video>} */}
     </>
 };
 
