@@ -27,6 +27,8 @@ const NativeVideoRecorder =(props) => {
   } else if (MediaRecorder.isTypeSupported('video/mp4')) {
     mimeType = 'video/mp4';
     options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
+  } else {
+    alert("Recording Media is not supported in your device!")
   }
     navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
       noiseSuppression: true} }).then(mediaStream => {
@@ -80,12 +82,13 @@ const NativeVideoRecorder =(props) => {
             autoPlay
             playsInline
             ref={refVideo}
-            style={{ width: "350px" }}
-          />
+            style={{ width: "350px" }}>
+          </video>
           <a download href={videoUrl}>Native Download Recording</a>
         </> : <video ref={refRecordingElem}
                 style={{ width: "350px" }}
                 playsInline
+                muted
                 autoPlay />}
       </header>
     </div>
