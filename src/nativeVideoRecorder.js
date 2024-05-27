@@ -53,6 +53,9 @@ const NativeVideoRecorder =(props) => {
               localAudioChunks.push((event.data));
           };
           videoChunks.current = localAudioChunks;
+      }).catch((e)=> {
+        console.log(e)
+        alert(e.message);
       });
     } catch(e) {
       console.log(e)
