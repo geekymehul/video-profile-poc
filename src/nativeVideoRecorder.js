@@ -21,36 +21,44 @@ const NativeVideoRecorder =(props) => {
     setBlob(null);
     setVideoUrl(null);
     let options;
-    if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
-      mimeType = 'video/webm; codecs=vp9';
-      options = {mimeType: 'video/webm; codecs=vp9'};
-  } else if (MediaRecorder.isTypeSupported('video/mp4')) {
-    mimeType = 'video/mp4';
-    // options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
-    options = {mimeType: 'video/mp4'};
-  } else {
-    alert("Recording Media is not supported in your device!")
-  }
-    navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
-      noiseSuppression: true} }).then(mediaStream => {
-        // create the recorder
-        recorderRef.current = new MediaRecorder(mediaStream, options);
-        setStream(mediaStream);
-        // starts recording
-        recorderRef.current.start();
-        // sets video element to use the stream
-        refRecordingElem.current.srcObject = mediaStream;
-        // sets the video element to autoplay, otherwise user would have to click play
-        refRecordingElem.current.autoplay = true;
-        
-        let localAudioChunks = [];
-        recorderRef.current.ondataavailable = event => {
-            if (typeof event.data === "undefined") return;
-            if (event.data.size === 0) return;
-            localAudioChunks.push((event.data));
-        };
-        videoChunks.current = localAudioChunks;
-    });
+
+    try {
+      if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
+        mimeType = 'video/webm; codecs=vp9';
+        options = {mimeType: 'video/webm; codecs=vp9'};
+      } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+        mimeType = 'video/mp4';
+        // options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
+        options = {mimeType: 'video/mp4'};
+      } else {
+        alert("Recording Media is not supported in your device!")
+      }
+
+      navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
+        noiseSuppression: true} }).then(mediaStream => {
+          // create the recorder
+          recorderRef.current = new MediaRecorder(mediaStream, options);
+          setStream(mediaStream);
+          // starts recording
+          recorderRef.current.start();
+          // sets video element to use the stream
+          refRecordingElem.current.srcObject = mediaStream;
+          // sets the video element to autoplay, otherwise user would have to click play
+          refRecordingElem.current.autoplay = true;
+          
+          let localAudioChunks = [];
+          recorderRef.current.ondataavailable = event => {
+              if (typeof event.data === "undefined") return;
+              if (event.data.size === 0) return;
+              localAudioChunks.push((event.data));
+          };
+          videoChunks.current = localAudioChunks;
+      });
+    } catch(e) {
+      console.log(e)
+      alert(e.message);
+    }
+
   };
 
   const handleStop = () => {
