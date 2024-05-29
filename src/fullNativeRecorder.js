@@ -86,7 +86,13 @@ const FullNativeVideoRecorder =(props) => {
             recorderVideoChunks.current = videoChunks.current;
             videoChunks.current = [];
             // exit fullscreen
-            document.exitFullscreen();
+            if(document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if(document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else {
+                alert("exit fullscreen is not supported on your browser");
+            }
             if(stream) {
               stream.getTracks().forEach(function(track) {
                 track.stop();
