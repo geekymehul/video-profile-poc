@@ -40,7 +40,7 @@ const VideoRecorder =(props) => {
 
   return (
     <div className="video">
-      <div>Video Recording</div>
+      <div>Library Video Recording</div>
       <header className="video-header">
         <button onClick={handleRecording}>start</button>
         <button onClick={handleStop}>stop</button>

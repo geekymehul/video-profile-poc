@@ -6,7 +6,7 @@ let mimeType = 'video/webm;codecs=vp9';
 
 
 
-const NativeVideoRecorder =(props) => {
+const FullNativeVideoRecorder =(props) => {
   const [stream, setStream] = useState(null);
   const [blob, setBlob] = useState(null);
   const [videoUrl,setVideoUrl] = useState(null);
@@ -25,10 +25,12 @@ const NativeVideoRecorder =(props) => {
     try {
       if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
         mimeType = 'video/webm; codecs=vp9';
-        options = props.enableCompression ? {mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond : 2000000} : {mimeType: 'video/webm; codecs=vp9'};
+        options = {mimeType: 'video/webm; codecs=vp9', width: { exact: 640 },
+        height: { exact: 360 }};
       } else if (MediaRecorder.isTypeSupported('video/mp4')) {
         mimeType = 'video/mp4';
-        options = props.enableCompression ? {mimeType: 'video/mp4', videoBitsPerSecond : 2000000} : {mimeType: 'video/mp4'};
+        // options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
+        options = {mimeType: 'video/mp4'};
       } else {
         alert("Recording Media is not supported in your device!")
       }
@@ -44,6 +46,8 @@ const NativeVideoRecorder =(props) => {
           refRecordingElem.current.srcObject = mediaStream;
           // sets the video element to autoplay, otherwise user would have to click play
           refRecordingElem.current.autoplay = true;
+          // open video in fullscreen
+          refRecordingElem.current.parentElement.requestFullscreen();
           
           let localAudioChunks = [];
           recorderRef.current.ondataavailable = event => {
@@ -75,7 +79,8 @@ const NativeVideoRecorder =(props) => {
             setVideoUrl(videoDownUrl);
             recorderVideoChunks.current = videoChunks.current;
             videoChunks.current = [];
-
+            // exit fullscreen
+            document.exitFullscreen();
             if(stream) {
               stream.getTracks().forEach(function(track) {
                 track.stop();
@@ -85,24 +90,29 @@ const NativeVideoRecorder =(props) => {
     }
   };
 
+  const width = window.innerWidth;
+  const height = window.innerHeight;
 
   return (
     <div className="video">
-      <div>{(props.enableCompression ? "Compressed " : "") + ("Video Recording")}</div>
+      <div>Full screen Video Recording</div>
       <header className="video-header">
-        <button onClick={handleRecording}>start</button>
-        <button onClick={handleStop}>stop</button>
-        {videoUrl ? <>
+        <button onClick={handleRecording} className="btn-start">start</button>
+        <button onClick={handleStop} className="btn-stop">stop</button>
+        {videoUrl ? <div>
           <video
             src={videoUrl}
             controls
+            autoPlay
             playsInline
             ref={refVideo}
-            style={{ width: "350px" }}>
+            style={{ width: "350px" }}
+            >
           </video>
           <a download href={videoUrl}>Native Download Recording</a>
-        </> : <video ref={refRecordingElem}
-                style={{ width: "350px" }}
+        </div> : <video ref={refRecordingElem}
+                style={{ width, height }}
+                className="record-video"
                 playsInline
                 muted
                 autoPlay />}
@@ -111,4 +121,4 @@ const NativeVideoRecorder =(props) => {
   );
 };
 
-export default NativeVideoRecorder;
+export default FullNativeVideoRecorder;

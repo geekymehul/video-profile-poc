@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.btn-start {
+  position: fixed;
+  bottom: 200px;
+  right: calc(50% - 100px);
+  z-index: 99999;
+}
+
+.btn-stop {
+  position: fixed;
+  bottom: 200px;
+  right: 50%;
+  z-index: 9999999;
+}
+
+.record-video {
+  object-fit: cover;
+}

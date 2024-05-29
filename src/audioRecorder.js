@@ -87,11 +87,11 @@ const AudioRecorder = (props) => {
 
     return <div className="audio-controls">
         {recordingStatus === "inactive" ? <button onClick={getMicrophonePermission} type="button">
-            Start Recording
+            Start Audio Recording
         </button> : null}
         {recordingStatus === "recording" ? (
         <button onClick={stopRecording} type="button">
-            Stop Recording
+            Stop Audio Recording
         </button>
         ) : null}
         {audio ? <div className="audio-container">
