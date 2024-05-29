@@ -47,7 +47,13 @@ const FullNativeVideoRecorder =(props) => {
           // sets the video element to autoplay, otherwise user would have to click play
           refRecordingElem.current.autoplay = true;
           // open video in fullscreen
-          refRecordingElem.current.parentElement.requestFullscreen();
+          if(document.requestFullscreen) {
+            refRecordingElem.current.parentElement.requestFullscreen();
+          } else if (typeof document.webkitCurrentFullScreenElement !== 'undefined') {
+            refRecordingElem.current.parentElement.webkitCurrentFullScreenElement();
+          } else {
+            alert("fullscreen is not supported");
+          }
           
           let localAudioChunks = [];
           recorderRef.current.ondataavailable = event => {
