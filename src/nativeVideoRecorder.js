@@ -18,6 +18,9 @@ const NativeVideoRecorder =(props) => {
   const recorderVideoChunks = useRef([]);
 
   const handleRecording = async () => {
+    if(props.setActive) {
+      props.setActive(true);
+    }
     setBlob(null);
     setVideoUrl(null);
     let options;
@@ -64,6 +67,9 @@ const NativeVideoRecorder =(props) => {
   };
 
   const handleStop = () => {
+    if(props.setActive) {
+      props.setActive(false);
+    }
     if(recorderRef.current) {
         //stops the recording instance
         recorderRef.current.stop();

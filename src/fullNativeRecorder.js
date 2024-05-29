@@ -97,8 +97,10 @@ const FullNativeVideoRecorder =(props) => {
     <div className="video">
       <div>Full screen Video Recording</div>
       <header className="video-header">
-        <button onClick={handleRecording} className="btn-start">start</button>
-        <button onClick={handleStop} className="btn-stop">stop</button>
+        {!props.isActive ? <>
+            <button onClick={handleRecording} className="btn-start">start</button>
+            <button onClick={handleStop} className="btn-stop">stop</button>
+        </> : <></>}
         {videoUrl ? <div>
           <video
             src={videoUrl}
