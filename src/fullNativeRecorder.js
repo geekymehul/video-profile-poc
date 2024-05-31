@@ -47,13 +47,7 @@ const FullNativeVideoRecorder =(props) => {
           // sets the video element to autoplay, otherwise user would have to click play
           refRecordingElem.current.autoplay = true;
           // open video in fullscreen
-          if(document.requestFullscreen) {
-            refRecordingElem.current.parentElement.requestFullscreen();
-          } else if (typeof document.webkitCurrentFullScreenElement !== 'undefined') {
-            refRecordingElem.current.parentElement.webkitCurrentFullScreenElement();
-          } else {
-            alert("fullscreen is not supported");
-          }
+          requestFullScreen();
           
           let localAudioChunks = [];
           recorderRef.current.ondataavailable = event => {
@@ -86,13 +80,7 @@ const FullNativeVideoRecorder =(props) => {
             recorderVideoChunks.current = videoChunks.current;
             videoChunks.current = [];
             // exit fullscreen
-            if(document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if(document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else {
-                alert("exit fullscreen is not supported on your browser");
-            }
+            cancelFullScreen();
             if(stream) {
               stream.getTracks().forEach(function(track) {
                 track.stop();
@@ -101,6 +89,36 @@ const FullNativeVideoRecorder =(props) => {
         };
     }
   };
+
+  const requestFullScreen =()=> {
+    if (refRecordingElem.current.parentElement.requestFullscreen)
+      refRecordingElem.current.parentElement.requestFullscreen();
+    else if (refRecordingElem.current.parentElement.mozRequestFullScreen)
+      refRecordingElem.current.parentElement.mozRequestFullScreen();
+    else if (refRecordingElem.current.parentElement.webkitRequestFullscreen)
+      refRecordingElem.current.parentElement.webkitRequestFullscreen();
+    else if(refRecordingElem.current.parentElement) {
+      refRecordingElem.current.parentElement.webkitEnterFullscreen();
+      if(refRecordingElem.current.parentElement.enterFullscreen)
+        refRecordingElem.current.parentElement.enterFullscreen();
+    } else if (refRecordingElem.current.parentElement.msRequestFullscreen)
+      refRecordingElem.current.parentElement.msRequestFullscreen();
+    else
+      alert("fullscreen is not supported");
+  }
+  
+  function cancelFullScreen () {
+    if (document.exitFullscreen)
+      document.exitFullscreen();
+    else if (document.mozCancelFullScreen)
+      document.mozCancelFullScreen();
+    else if (document.webkitExitFullscreen)
+      document.webkitExitFullscreen();
+    else if (document.msExitFullscreen)
+      document.msExitFullscreen();
+    else
+      alert("exit fullscreen is not supported");
+  }
 
   const width = window.innerWidth;
   const height = window.innerHeight;
