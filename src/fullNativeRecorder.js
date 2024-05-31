@@ -46,16 +46,19 @@ const FullNativeVideoRecorder =(props) => {
           refRecordingElem.current.srcObject = mediaStream;
           // sets the video element to autoplay, otherwise user would have to click play
           refRecordingElem.current.autoplay = true;
-          // open video in fullscreen
-          requestFullScreen();
-          
-          let localAudioChunks = [];
-          recorderRef.current.ondataavailable = event => {
-              if (typeof event.data === "undefined") return;
-              if (event.data.size === 0) return;
-              localAudioChunks.push((event.data));
-          };
-          videoChunks.current = localAudioChunks;
+
+          refRecordingElem.current.addEventListener('loadedmetadata', function () {
+            // open video in fullscreen
+            requestFullScreen();
+            
+            let localAudioChunks = [];
+            recorderRef.current.ondataavailable = event => {
+                if (typeof event.data === "undefined") return;
+                if (event.data.size === 0) return;
+                localAudioChunks.push((event.data));
+            };
+            videoChunks.current = localAudioChunks;
+          }, false);
       }).catch((e)=> {
         console.log(e)
         alert(e.message);
@@ -121,15 +124,16 @@ const FullNativeVideoRecorder =(props) => {
       alert("fullscreen is not supported");
   }
   
-  function cancelFullScreen () {
-    if (document.exitFullscreen)
+  const cancelFullScreen =()=> {
+    if (document.fullscreenElement) {
       document.exitFullscreen();
-    else if (document.mozCancelFullScreen)
-      document.mozCancelFullScreen();
-    else if (document.webkitExitFullscreen)
-      document.webkitExitFullscreen();
-    else if (document.msExitFullscreen)
-      document.msExitFullscreen();
+    } else if (document.webkitFullscreenElement) { // Safari
+        document.webkitExitFullscreen();
+    } else if (document.mozFullScreenElement) { // Firefox
+        document.mozCancelFullScreen();
+    } else if (document.msFullscreenElement) { // IE/Edge
+        document.msExitFullscreen();
+    }
     else
       alert("exit fullscreen is not supported");
   }
