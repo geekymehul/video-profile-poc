@@ -41,14 +41,14 @@
   position: fixed;
   bottom: 200px;
   right: calc(50% - 100px);
-  z-index: 99999;
+  z-index: 2147483647;
 }
 
 .btn-stop {
   position: fixed;
   bottom: 200px;
   right: 50%;
-  z-index: 9999999;
+  z-index: 2147483647;
 }
 
 .record-video {

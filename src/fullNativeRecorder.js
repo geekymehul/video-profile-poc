@@ -90,17 +90,31 @@ const FullNativeVideoRecorder =(props) => {
     }
   };
 
+  const isIOS =()=>  /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  const isSafari =()=> /Safari/i.test(navigator.userAgent) && !/Chrome/i.test(navigator.userAgent);
+
   const requestFullScreen =()=> {
+
+    if (isIOS() && isSafari()) {
+      // Use webkitEnterFullscreen for iOS Safari
+      if (refRecordingElem.current.webkitEnterFullscreen) {
+        refRecordingElem.current.webkitEnterFullscreen();
+      } else {
+          alert("Fullscreen API is not supported on this browser.");
+      }
+  }
+
     if (refRecordingElem.current.parentElement.requestFullscreen)
       refRecordingElem.current.parentElement.requestFullscreen();
     else if (refRecordingElem.current.parentElement.mozRequestFullScreen)
       refRecordingElem.current.parentElement.mozRequestFullScreen();
     else if (refRecordingElem.current.parentElement.webkitRequestFullscreen)
-      refRecordingElem.current.parentElement.webkitRequestFullscreen();
-    else if(refRecordingElem.current.parentElement) {
-      refRecordingElem.current.parentElement.webkitEnterFullscreen();
-      if(refRecordingElem.current.parentElement.enterFullscreen)
-        refRecordingElem.current.parentElement.enterFullscreen();
+      refRecordingElem.current.webkitRequestFullscreen();
+    else if(refRecordingElem.current.webkitEnterFullscreen) {
+      refRecordingElem.current.webkitEnterFullscreen();
+      if(refRecordingElem.current.enterFullscreen)
+        refRecordingElem.current.enterFullscreen();
     } else if (refRecordingElem.current.parentElement.msRequestFullscreen)
       refRecordingElem.current.parentElement.msRequestFullscreen();
     else
