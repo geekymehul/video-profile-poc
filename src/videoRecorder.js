@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import RecordRTC, { invokeSaveAsDialog } from "recordrtc";
 
+let mimeType = 'video/webm;codecs=vp9';
+
 const VideoRecorder =(props) => {
   const [stream, setStream] = useState(null);
   const [blob, setBlob] = useState(null);
@@ -8,17 +10,38 @@ const VideoRecorder =(props) => {
   const refRecordingElem = useRef(null);
   const recorderRef = useRef(null);
 
+  const isIOS =()=>  /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  const isSafari =()=> /Safari/i.test(navigator.userAgent) && !/Chrome/i.test(navigator.userAgent);
+
   const handleRecording = async () => {
+    if(props.setActive) {
+      props.setActive(true);
+    }
     setBlob(null);
-    const mediaStream = (await navigator.mediaDevices.getUserMedia({ video: true, audio: true }));
+    let options;
+
+    if(isIOS() || isSafari()) {
+      mimeType = 'video/mp4';
+      options = props.enableCompression ? {mimeType: 'video/mp4', videoBitsPerSecond : 2000000} : {mimeType: 'video/mp4'};
+    } else {
+      mimeType = 'video/webm; codecs=vp9';
+      options = props.enableCompression ? {mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond : 2000000} : {mimeType: 'video/webm; codecs=vp9'};
+    }
+
+    const mediaStream = (await navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
+      noiseSuppression: true} }));
     setStream(mediaStream);
-    recorderRef.current = new RecordRTC(mediaStream, { type: "video" });
+    recorderRef.current = new RecordRTC(mediaStream, options);
     recorderRef.current.camera = mediaStream;
     if(recorderRef.current)
         recorderRef.current.startRecording();
   };
 
   const handleStop = () => {
+    if(props.setActive) {
+      props.setActive(false);
+    }
     recorderRef.current.stopRecording(() => {
       setBlob(recorderRef.current.getBlob());
       recorderRef.current.camera.stop();
@@ -40,7 +63,7 @@ const VideoRecorder =(props) => {
 
   return (
     <div className="video">
-      <div>Library Video Recording</div>
+      <div>WebRTC Video Recording</div>
       <header className="video-header">
         <button onClick={handleRecording}>start</button>
         <button onClick={handleStop}>stop</button>

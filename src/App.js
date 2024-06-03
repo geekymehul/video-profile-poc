@@ -1,9 +1,7 @@
 import './App.css';
 import AudioRecorder from "./audioRecorder";
 import NativeVideoRecorder from "./nativeVideoRecorder";
-import FullNativeVideoRecorder from './fullNativeRecorder';
 import VideoRecorder from "./videoRecorder";
-import VideoRecordLib from "./VideoRecordLib";
 import { useState } from 'react';
 
 function App() {
@@ -17,10 +15,11 @@ function App() {
         <AudioRecorder></AudioRecorder>
         <br></br>
         <br></br>
-        <NativeVideoRecorder setActive={setActive}/>
-        <br></br>
-        <br></br>
         <NativeVideoRecorder enableCompression={true} setActive={setActive}/>
+        <br></br>
+        <br></br>
+        <VideoRecorder setActive={setActive}></VideoRecorder>
+        <br></br>
       </>}
       <NativeVideoRecorder enableCompression={true} setFullScreen={setFullScreen} isActive={isActive}/>
       {/* <FullNativeVideoRecorder isActive={isActive} setFullScreen={setFullScreen}></FullNativeVideoRecorder> */}
