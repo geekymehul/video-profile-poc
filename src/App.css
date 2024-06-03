@@ -51,6 +51,20 @@
   z-index: 2147483647;
 }
 
-.record-video {
+video {
+  transform: rotateY(180deg);
+  -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+  -moz-transform:rotateY(180deg); /* Firefox */
+}
+
+.fullscreen-video {
   object-fit: cover;
+}
+
+video::-webkit-media-controls {
+ transform: rotateY(180deg);
+}
+
+video::-webkit-media-controls-enclosure {
+  transform: rotateY(0deg);
 }

@@ -9,17 +9,21 @@ import { useState } from 'react';
 function App() {
 
   const [isActive,setActive] = useState(false);
+  const [isFullScreen, setFullScreen] = useState(false);
 
   return (
     <div className="App">
-      <AudioRecorder></AudioRecorder>
-      <br></br>
-      <br></br>
-      <NativeVideoRecorder setActive={setActive}/>
-      <br></br>
-      <br></br>
-      <NativeVideoRecorder enableCompression={true} setActive={setActive}/>
-      <FullNativeVideoRecorder isActive={isActive}></FullNativeVideoRecorder>
+      {isFullScreen ? <></> : <>
+        <AudioRecorder></AudioRecorder>
+        <br></br>
+        <br></br>
+        <NativeVideoRecorder setActive={setActive}/>
+        <br></br>
+        <br></br>
+        <NativeVideoRecorder enableCompression={true} setActive={setActive}/>
+      </>}
+      <NativeVideoRecorder enableCompression={true} setFullScreen={setFullScreen} isActive={isActive}/>
+      {/* <FullNativeVideoRecorder isActive={isActive} setFullScreen={setFullScreen}></FullNativeVideoRecorder> */}
     </div>
   );
 }

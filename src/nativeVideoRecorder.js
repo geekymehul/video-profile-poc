@@ -21,6 +21,9 @@ const NativeVideoRecorder =(props) => {
     if(props.setActive) {
       props.setActive(true);
     }
+    if(props.setFullScreen) {
+      props.setFullScreen(true)
+    }
     setBlob(null);
     setVideoUrl(null);
     let options;
@@ -87,28 +90,42 @@ const NativeVideoRecorder =(props) => {
                 track.stop();
               });
             }
+
+            if(props.setFullScreen) {
+              props.setFullScreen(false);
+            }
         };
     }
   };
 
 
+  const width = props.setFullScreen ? window.innerWidth : "350px";
+  const height = props.setFullScreen ? window.innerHeight : "";
+
   return (
     <div className="video">
-      <div>{(props.enableCompression ? "Compressed " : "") + ("Video Recording")}</div>
+      <div>{(props.setFullScreen ? "Full screen " : "") + (props.enableCompression ? "Compressed " : "") + ("Video Recording")}</div>
       <header className="video-header">
-        <button onClick={handleRecording}>start</button>
-        <button onClick={handleStop}>stop</button>
+      {props.setFullScreen ? !props.isActive ? <>
+            <button onClick={handleRecording} className="btn-start">start</button>
+            <button onClick={handleStop} className="btn-stop">stop</button>
+        </> : <></> : <>
+          <button onClick={handleRecording}>start</button>
+          <button onClick={handleStop}>stop</button>
+        </>}
         {videoUrl ? <>
           <video
             src={videoUrl}
             controls
             playsInline
+            style={{ width: "350px" }}
             ref={refVideo}
-            style={{ width: "350px" }}>
+            >
           </video>
           <a download href={videoUrl}>Native Download Recording</a>
         </> : <video ref={refRecordingElem}
-                style={{ width: "350px" }}
+                style={{ width, height }}
+                className="fullscreen-video"
                 playsInline
                 muted
                 autoPlay />}
