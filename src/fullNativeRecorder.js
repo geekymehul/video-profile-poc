@@ -25,12 +25,12 @@ const FullNativeVideoRecorder =(props) => {
     try {
       if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
         mimeType = 'video/webm; codecs=vp9';
-        options = {mimeType: 'video/webm; codecs=vp9', width: { exact: 640 },
-        height: { exact: 360 }};
+        options = props.enableCompression ? {mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond : 2000000} : {mimeType: 'video/webm; codecs=vp9'};
+        alert("mimetype is webm" );
       } else if (MediaRecorder.isTypeSupported('video/mp4')) {
         mimeType = 'video/mp4';
-        // options = {mimeType: 'video/mp4', videoBitsPerSecond : 100000};
-        options = {mimeType: 'video/mp4'};
+        options = props.enableCompression ? {mimeType: 'video/mp4', videoBitsPerSecond : 2000000} : {mimeType: 'video/mp4'};
+        alert("mimetype is mp4" );
       } else {
         alert("Recording Media is not supported in your device!")
       }
@@ -103,7 +103,10 @@ const FullNativeVideoRecorder =(props) => {
       // Use webkitEnterFullscreen for iOS Safari
       if (refRecordingElem.current.webkitEnterFullscreen) {
         refRecordingElem.current.webkitEnterFullscreen();
-      } else {
+        refRecordingElem.current.enterFullscreen && refRecordingElem.current.enterFullscreen();
+      } else if (refRecordingElem.current.parentElement.webkitRequestFullscreen)
+        refRecordingElem.current.webkitRequestFullscreen(); 
+      else {
           alert("Fullscreen API is not supported on this browser.");
       }
   }
@@ -112,13 +115,7 @@ const FullNativeVideoRecorder =(props) => {
       refRecordingElem.current.parentElement.requestFullscreen();
     else if (refRecordingElem.current.parentElement.mozRequestFullScreen)
       refRecordingElem.current.parentElement.mozRequestFullScreen();
-    else if (refRecordingElem.current.parentElement.webkitRequestFullscreen)
-      refRecordingElem.current.webkitRequestFullscreen();
-    else if(refRecordingElem.current.webkitEnterFullscreen) {
-      refRecordingElem.current.webkitEnterFullscreen();
-      if(refRecordingElem.current.enterFullscreen)
-        refRecordingElem.current.enterFullscreen();
-    } else if (refRecordingElem.current.parentElement.msRequestFullscreen)
+    else if (refRecordingElem.current.parentElement.msRequestFullscreen)
       refRecordingElem.current.parentElement.msRequestFullscreen();
     else
       alert("fullscreen is not supported");
