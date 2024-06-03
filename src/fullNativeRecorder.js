@@ -122,8 +122,8 @@ const FullNativeVideoRecorder =(props) => {
   const cancelFullScreen =()=> {
     if (document.fullscreenElement) {
       document.exitFullscreen();
-    } else if (document.webkitFullscreenElement) { // Safari
-        document.webkitExitFullscreen();
+    } else if (refRecordingElem.current.webkitFullscreenElement) { // Safari
+      refRecordingElem.current.webkitExitFullscreen();
     } else if (document.mozFullScreenElement) { // Firefox
         document.mozCancelFullScreen();
     } else if (document.msFullscreenElement) { // IE/Edge
