@@ -109,9 +109,7 @@ const FullNativeVideoRecorder =(props) => {
       else {
           alert("Fullscreen API is not supported on this browser.");
       }
-  }
-
-    if (refRecordingElem.current.parentElement.requestFullscreen)
+  } else if (refRecordingElem.current.parentElement.requestFullscreen)
       refRecordingElem.current.parentElement.requestFullscreen();
     else if (refRecordingElem.current.parentElement.mozRequestFullScreen)
       refRecordingElem.current.parentElement.mozRequestFullScreen();
