@@ -1,5 +1,6 @@
 import './App.css';
 import AudioRecorder from "./audioRecorder";
+import InputVideoPlayer from './inputVideoPlayer';
 import NativeVideoRecorder from "./nativeVideoRecorder";
 import VideoRecorder from "./videoRecorder";
 import { useState } from 'react';
@@ -13,12 +14,15 @@ function App() {
     <div className="App">
       {isFullScreen ? <></> : <>
         <AudioRecorder></AudioRecorder>
+        {/* <br></br>
         <br></br>
-        <br></br>
-        <NativeVideoRecorder enableCompression={true} setActive={setActive}/>
+        <NativeVideoRecorder enableCompression={true} setActive={setActive}/> */}
         <br></br>
         <br></br>
         <VideoRecorder setActive={setActive}></VideoRecorder>
+        <br></br>
+        <br></br>
+        <InputVideoPlayer></InputVideoPlayer>
         <br></br>
       </>}
       <NativeVideoRecorder enableCompression={true} setFullScreen={setFullScreen} isActive={isActive}/>

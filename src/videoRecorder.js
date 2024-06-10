@@ -25,7 +25,7 @@ const VideoRecorder =(props) => {
       mimeType = 'video/mp4';
       options = props.enableCompression ? {mimeType: 'video/mp4', videoBitsPerSecond : 2000000} : {mimeType: 'video/mp4'};
     } else {
-      mimeType = 'video/webm; codecs=vp9';
+      mimeType = 'video/webm';
       options = props.enableCompression ? {mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond : 2000000} : {mimeType: 'video/webm; codecs=vp9'};
     }
 
