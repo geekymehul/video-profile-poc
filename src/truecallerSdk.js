@@ -27,7 +27,7 @@ const TrueCallerSdk =()=> {
         window.location = `truecallersdk://truesdk/web_verify?
           type=btmsheet
           requestNonce=${randomString}
-          &partnerKey=uTFaCdd1a1f00292d464fb039de4c79dbf791
+          &partnerKey=v2oqbaf8ba71d00594437acfcac38228cd6c6
           &partnerName=Naukrigulf
           &lang=en
           &privacyUrl=https://www.naukrigulf.com/privacy-policy
