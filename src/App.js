@@ -2,6 +2,7 @@ import './App.css';
 import AudioRecorder from "./audioRecorder";
 import InputVideoPlayer from './inputVideoPlayer';
 import NativeVideoRecorder from "./nativeVideoRecorder";
+import TrueCallerSdk from './truecallerSdk';
 import VideoRecorder from "./videoRecorder";
 import { useState } from 'react';
 
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <div className="App">
+      <TrueCallerSdk/>
       {isFullScreen ? <></> : <>
         <AudioRecorder></AudioRecorder>
         {/* <br></br>
