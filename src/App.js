@@ -4,6 +4,7 @@ import InputVideoPlayer from './inputVideoPlayer';
 import NativeVideoRecorder from "./nativeVideoRecorder";
 import TrueCallerSdk from './truecallerSdk';
 import VideoRecorder from "./videoRecorder";
+import WebcamStreamCapture from "./wbcamLib";
 import { useState } from 'react';
 
 function App() {
@@ -21,13 +22,16 @@ function App() {
         <NativeVideoRecorder enableCompression={true} setActive={setActive}/> */}
         <br></br>
         <br></br>
-        <VideoRecorder setActive={setActive}></VideoRecorder>
+        {/* <VideoRecorder setActive={setActive}></VideoRecorder> */}
         <br></br>
         <br></br>
         <InputVideoPlayer></InputVideoPlayer>
         <br></br>
       </>}
-      <NativeVideoRecorder enableCompression={true} setFullScreen={setFullScreen} isActive={isActive}/>
+
+      <WebcamStreamCapture/>
+          
+      {/* <NativeVideoRecorder enableCompression={true} setFullScreen={setFullScreen} isActive={isActive}/> */}
       {/* <FullNativeVideoRecorder isActive={isActive} setFullScreen={setFullScreen}></FullNativeVideoRecorder> */}
     </div>
   );
