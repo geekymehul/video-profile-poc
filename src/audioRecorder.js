@@ -77,7 +77,7 @@ const AudioRecorder = (props) => {
                     // reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs
                     let base64 = reader.result;
                     base64 = base64 ? base64.toString().split(",")[1] : "";
-                    console.log(base64 );
+                    console.log("length of base 64",base64.length,base64);
                 } catch(e) {
                     console.log("error occured when converting into base64");
                 }

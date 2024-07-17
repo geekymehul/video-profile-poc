@@ -6,6 +6,7 @@ import TrueCallerSdk from './truecallerSdk';
 import VideoRecorder from "./videoRecorder";
 import WebcamStreamCapture from "./wbcamLib";
 import { useState } from 'react';
+import FileCompressor from './fileCompressor';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
         <br></br>
         <br></br>
         <InputVideoPlayer></InputVideoPlayer>
+        <FileCompressor></FileCompressor>
         <br></br>
       </>}
 
