@@ -24,8 +24,10 @@ const InputVideoPlayer =(props)=> {
 
       const video = document.createElement('video');
       video.preload = 'metadata';
-    
+      video.autoplay = true;
+
       video.onloadedmetadata = function() {
+        alert("going here in event");
         window.URL.revokeObjectURL(video.src);
         if (video.duration === Infinity) {
           // fix for bug when duration is wrongly returned
@@ -34,6 +36,8 @@ const InputVideoPlayer =(props)=> {
         } else {
           var duration = video.duration;
           console.log("duration is "+ duration);
+          alert("duration is "+ duration);
+          video.remove();
         }
       }
     
@@ -42,9 +46,6 @@ const InputVideoPlayer =(props)=> {
       video.src = videoUrl;
 
       seVideoSrc(videoUrl);
-      setTimeout(()=>{
-        // videoRef.current.play();
-      },0);
   };
 
     return <div>
