@@ -75,11 +75,13 @@ const VideoRecorder =(props) => {
             autoPlay
             ref={refVideo}
             style={{ width: "350px" }}
+            playsInline
           />
           <a download href={URL.createObjectURL(blob)}>Download Recording</a>
         </> : <video ref={refRecordingElem}
                 style={{ width: "350px" }}
                 controls
+                playsInline
                 autoPlay />}
       </header>
     </div>
