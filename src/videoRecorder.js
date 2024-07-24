@@ -22,6 +22,7 @@ const VideoRecorder =(props) => {
     let options;
 
     if(isIOS() || isSafari()) {
+      alert("mp4 format is being used");
       mimeType = 'video/mp4';
       options = props.enableCompression ? {mimeType: 'video/mp4', videoBitsPerSecond : 2000000} : {mimeType: 'video/mp4'};
     } else {
@@ -70,19 +71,21 @@ const VideoRecorder =(props) => {
         <button onClick={handleSave}>save</button>
         {blob ? <>
           <video
-            src={URL.createObjectURL(blob)}
             controls
             autoPlay
             ref={refVideo}
             style={{ width: "350px" }}
             playsInline
-          />
+          >
+          <source type="video/mp4" src={URL.createObjectURL(blob)}></source>
+          </video>
           <a download href={URL.createObjectURL(blob)}>Download Recording</a>
         </> : <video ref={refRecordingElem}
                 style={{ width: "350px" }}
                 controls
                 playsInline
-                autoPlay />}
+                autoPlay>
+                </video>}
       </header>
     </div>
   );
