@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { encodeBinary, decodeBinary } from 'base64-compressor';
 
 const InputVideoPlayer =(props)=> {
 

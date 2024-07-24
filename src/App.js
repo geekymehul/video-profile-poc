@@ -27,11 +27,11 @@ function App() {
         <br></br>
         <br></br>
         <InputVideoPlayer></InputVideoPlayer>
-        <FileCompressor></FileCompressor>
+        {/* <FileCompressor></FileCompressor> */}
         <br></br>
       </>}
-
-      <WebcamStreamCapture/>
+{/* 
+      <WebcamStreamCapture/> */}
           
       {/* <NativeVideoRecorder enableCompression={true} setFullScreen={setFullScreen} isActive={isActive}/> */}
       {/* <FullNativeVideoRecorder isActive={isActive} setFullScreen={setFullScreen}></FullNativeVideoRecorder> */}
