@@ -16,6 +16,9 @@ const NativeVideoRecorder =(props) => {
   const recorderRef = useRef(null);
   const videoChunks = useRef([]);
   const recorderVideoChunks = useRef([]);
+  const currentTime = useRef(0);
+
+  const[isPlaying, setIsPlaying] = useState(false);
 
   const handleRecording = async () => {
     if(props.setActive) {
@@ -95,12 +98,68 @@ const NativeVideoRecorder =(props) => {
               });
             }
 
+            getFileDuration(URL.createObjectURL(videoBlob)).then(duration => {
+              alert("Video length is "+duration);
+            }).catch(err => {
+              alert("error occurred "+err);
+            });
+
             if(props.setFullScreen) {
               props.setFullScreen(false);
             }
         };
     }
   };
+
+  const playStopVideo =() => {
+    // state update causes video to go to intial time
+    // store current time once user has left
+    if(isPlaying) {
+      currentTime.current = refVideo.current.currentTime;
+    }
+    setIsPlaying(isPlaying => !isPlaying);
+  };
+
+  const getFileDuration =(fileSrc) => new Promise(resolve => {
+    const filePlayer = document.createElement("video");
+    filePlayer.preload = "metadata";
+    filePlayer.autoplay = true;
+  
+    const getDuration = e => {
+      e.target.currentTime = 0;
+      const duration = e.target.duration;
+      e.target.removeEventListener("timeupdate", getDuration);
+      resolve(duration);
+    };
+  
+    filePlayer.onloadedmetadata = function() {
+      if (filePlayer.duration === Infinity) {
+        // fix for bug when duration is wrongly returned
+        filePlayer.currentTime = 1e101;
+        filePlayer.addEventListener("timeupdate", getDuration);
+      } else {
+        const duration = filePlayer.duration;
+        filePlayer.remove();
+        resolve(duration);
+      }
+    };
+  
+    filePlayer.src = fileSrc;
+  });
+
+  React.useEffect(() => {
+    if(!refVideo.current)
+      return;
+    // on state render video gets set to intial time
+    // in order to resume video from when user paused
+    // seek the video to current time
+    refVideo.current.currentTime = currentTime.current;
+    if(isPlaying) {
+      refVideo.current.play();
+    } else {
+      refVideo.current.pause();
+    }
+  }, [isPlaying]);
 
 
   const width = props.setFullScreen ? window.innerWidth : "350px";
@@ -120,12 +179,12 @@ const NativeVideoRecorder =(props) => {
         {videoUrl ? <>
           <video
             src={videoUrl}
-            controls
             playsInline
             style={{ width: "350px" }}
             ref={refVideo}
             >
           </video>
+          <button onClick={playStopVideo}>Play Pause</button>
           <a download href={videoUrl}>Native Download Recording</a>
         </> : <video ref={refRecordingElem}
                 style={{ width, height }}
