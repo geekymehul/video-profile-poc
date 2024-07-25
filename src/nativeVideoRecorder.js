@@ -45,6 +45,9 @@ const NativeVideoRecorder =(props) => {
       mimeType = 'video/mp4';
       options = props.enableCompression ? {mimeType: 'video/mp4', videoBitsPerSecond : 2000000} : {mimeType: 'video/mp4'};
       
+      if(!MediaRecorder) {
+        alert("media recorder is not supported");
+      }
 
       navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
         noiseSuppression: true} }).then(mediaStream => {
