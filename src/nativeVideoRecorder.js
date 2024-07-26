@@ -187,7 +187,7 @@ const NativeVideoRecorder =(props) => {
         </>}
         {videoUrl ? <>
           <video
-            src={videoUrl+"#t=0.1"}
+            src={videoUrl}
             playsInline={true}
             autoPlay={true}
             style={{ width: "350px", height: "350px"}}
