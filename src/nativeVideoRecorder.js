@@ -191,17 +191,7 @@ const NativeVideoRecorder =(props) => {
           <button onClick={handleStop}>stop</button>
         </>}
         {videoUrl ? <>
-          <video
-            src={videoUrl+"#t=0.1"}
-            playsInline={true}
-            autoPlay={false}
-            style={{ width: "350px", height: "350px"}}
-            ref={refVideo}
-            preload="metadata"
-            onLoadedMetadata={playbackLoaded}
-            key={"recorded"}
-            >
-          </video>
+          <div>Video loaded</div>
           <button onClick={playStopVideo}>Play Pause</button>
           <a download href={videoUrl}>Native Download Recording</a>
         </> : <video ref={refRecordingElem}
