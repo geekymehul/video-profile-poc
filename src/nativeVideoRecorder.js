@@ -127,6 +127,7 @@ const NativeVideoRecorder =(props) => {
     filePlayer.preload = "metadata";
     filePlayer.muted = true;
     filePlayer.autoplay = true;
+    filePlayer.playsInline = true;
   
     const getDuration = e => {
       e.target.currentTime = 0;
@@ -188,12 +189,15 @@ const NativeVideoRecorder =(props) => {
           <video
             src={videoUrl+"#t=0.1"}
             playsInline={true}
-            autoPlay={false}
+            autoPlay={true}
             style={{ width: "350px", height: "350px"}}
             ref={refVideo}
             preload="metadata"
             onLoadedMetadata={playbackLoaded}
             key={"recorded"}
+            onError={err => {
+              alert('Video load error. ' + err.target.error.iosMessage);
+            }}
             >
           </video>
           <button onClick={playStopVideo}>Play Pause</button>
