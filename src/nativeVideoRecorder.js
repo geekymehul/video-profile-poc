@@ -125,7 +125,6 @@ const NativeVideoRecorder =(props) => {
   const getFileDuration =(fileSrc) => new Promise(resolve => {
     const filePlayer = document.createElement("video");
     filePlayer.preload = "metadata";
-    filePlayer.playsinline = true;
     filePlayer.playsInline = true;
     filePlayer.muted = true;
     filePlayer.autoplay = true;
@@ -171,13 +170,6 @@ const NativeVideoRecorder =(props) => {
       refVideo.current.pause();
     }
   }, [isPlaying]);
-
-  React.useEffect(()=> {
-    if(videoUrl) {
-        setIsPlaying(true);
-    }
-  },[videoUrl]);
-
 
   const width = props.setFullScreen ? window.innerWidth : "350px";
   const height = props.setFullScreen ? window.innerHeight : "";
