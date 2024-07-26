@@ -86,8 +86,7 @@ const NativeVideoRecorder =(props) => {
     if(recorderRef.current) {
         //stops the recording instance
         recorderRef.current.stop();
-        recorderRef.current.onstop = (e) => {
-            console.log(e);
+        recorderRef.current.onstop = () => {
             //creates a blob file from the videochunks data
             const videoBlob = new Blob(videoChunks.current, { type: mimeType });
             //creates a playable URL from the blob file.
@@ -102,10 +101,10 @@ const NativeVideoRecorder =(props) => {
               });
             }
 
-            // getFileDuration(URL.createObjectURL(videoBlob)).then(duration => {
-            // }).catch(err => {
-            //   alert("error occurred "+err);
-            // });
+            getFileDuration(URL.createObjectURL(videoBlob)).then(duration => {
+            }).catch(err => {
+              alert("error occurred "+err);
+            });
 
             if(props.setFullScreen) {
               props.setFullScreen(false);
