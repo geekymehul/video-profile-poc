@@ -11,7 +11,6 @@ const NativeVideoRecorder =(props) => {
   const [blob, setBlob] = useState(null);
   const [videoUrl,setVideoUrl] = useState(null);
 
-  const refVideo = useRef(null);
   const refRecordingElem = useRef(null);
   const recorderRef = useRef(null);
   const videoChunks = useRef([]);
@@ -86,6 +85,8 @@ const NativeVideoRecorder =(props) => {
     if(recorderRef.current) {
         //stops the recording instance
         recorderRef.current.stop();
+        refRecordingElem.current.srcObject = null;
+        refRecordingElem.current.autoPlay = false;
         recorderRef.current.onstop = () => {
             //creates a blob file from the videochunks data
             const videoBlob = new Blob(videoChunks.current, { type: mimeType });
@@ -117,7 +118,7 @@ const NativeVideoRecorder =(props) => {
     // state update causes video to go to intial time
     // store current time once user has left
     if(isPlaying) {
-      currentTime.current = refVideo.current.currentTime;
+      currentTime.current = refRecordingElem.current.currentTime;
     }
     setIsPlaying(isPlaying => !isPlaying);
   };
@@ -150,25 +151,25 @@ const NativeVideoRecorder =(props) => {
   });
 
   const playbackLoaded =() => {
-    if(refVideo.current) {
+    if(refRecordingElem.current) {
       setTimeout(() => {
         setIsPlaying(false);
-        refVideo.current.currentTime = 0;
+        refRecordingElem.current.currentTime = 0;
       },50)
     }
   }
 
   React.useEffect(() => {
-    if(!refVideo.current)
+    if(!refRecordingElem.current)
       return;
     // on state render video gets set to intial time
     // in order to resume video from when user paused
     // seek the video to current time
-    refVideo.current.currentTime = currentTime.current;
+    refRecordingElem.current.currentTime = currentTime.current;
     if(isPlaying) {
-      refVideo.current.play();
+      refRecordingElem.current.play();
     } else {
-      refVideo.current.pause();
+      refRecordingElem.current.pause();
     }
   }, [isPlaying]);
 
@@ -193,26 +194,18 @@ const NativeVideoRecorder =(props) => {
           <button onClick={handleRecording}>start</button>
           <button onClick={handleStop}>stop</button>
         </>}
-        {videoUrl ? <>
-          <video
-            src={videoUrl}
-            playsInline={true}
-            autoPlay={false}
+          <video ref={refRecordingElem}
+            src={videoUrl || ""}
             style={{ width: "350px", height: "350px"}}
-            ref={refVideo}
-            onLoadedMetadata={playbackLoaded}
-            key={"recorded"}
-            >
-          </video>
-          <button onClick={playStopVideo}>Play Pause</button>
-          <a download href={videoUrl}>Native Download Recording</a>
-        </> : <video ref={refRecordingElem}
-                style={{ width, height }}
-                className="fullscreen-video"
-                key={"recording"}
-                playsInline
-                muted
-                autoPlay />}
+            className="fullscreen-video"
+            key={"recording"}
+            playsInline
+            muted={!videoUrl}
+            autoPlay={!videoUrl} />
+          {videoUrl ? <>
+            <button onClick={playStopVideo}>Play Pause</button>
+            <a download href={videoUrl}>Native Download Recording</a>
+          </> : ""}
       </header>
     </div>
   );
