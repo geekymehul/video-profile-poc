@@ -151,15 +151,11 @@ const NativeVideoRecorder =(props) => {
 
   const playbackLoaded =() => {
     if(refVideo.current) {
-      currentTime.current = 0;
-      refVideo.current.pause();
-      setIsPlaying(false);
+      setTimeout(() => {
+        setIsPlaying(false);
+        refVideo.current.currentTime = 0;
+      },50)
     }
-  }
-
-  const onContextMenu =(e) => {
-    e.preventDefault();
-    e.stopPropagation();
   }
 
   React.useEffect(() => {
@@ -175,6 +171,12 @@ const NativeVideoRecorder =(props) => {
       refVideo.current.pause();
     }
   }, [isPlaying]);
+
+  React.useEffect(()=> {
+    if(videoUrl) {
+        setIsPlaying(true);
+    }
+  },[videoUrl]);
 
 
   const width = props.setFullScreen ? window.innerWidth : "350px";
@@ -194,17 +196,11 @@ const NativeVideoRecorder =(props) => {
         {videoUrl ? <>
           <video
             src={videoUrl}
-            playsinline={true}
             playsInline={true}
-            webkit-playsInline={true}
-            webkit-playsinline={true}
             style={{ width: "350px", height: "350px"}}
             ref={refVideo}
             onLoadedMetadata={playbackLoaded}
-            autoPlay
-            controls
             key={"recorded"}
-            onContextMenu={onContextMenu}
             >
           </video>
           <button onClick={playStopVideo}>Play Pause</button>
