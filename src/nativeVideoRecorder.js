@@ -197,6 +197,7 @@ const NativeVideoRecorder =(props) => {
             autoPlay={false}
             style={{ width: "350px", height: "350px"}}
             ref={refVideo}
+            preload="metadata"
             onLoadedMetadata={playbackLoaded}
             key={"recorded"}
             >
