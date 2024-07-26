@@ -196,7 +196,7 @@ const NativeVideoRecorder =(props) => {
             onLoadedMetadata={playbackLoaded}
             key={"recorded"}
             onError={err => {
-              alert('Video load error. ' + err.target.error.iosMessage);
+              alert('Video load error. ' + err);
             }}
             >
           </video>
