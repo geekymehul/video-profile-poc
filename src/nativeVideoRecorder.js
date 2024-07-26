@@ -202,6 +202,7 @@ const NativeVideoRecorder =(props) => {
             ref={refVideo}
             onLoadedMetadata={playbackLoaded}
             autoPlay
+            controls
             key={"recorded"}
             onContextMenu={onContextMenu}
             >
