@@ -194,8 +194,9 @@ const NativeVideoRecorder =(props) => {
         {videoUrl ? <>
           <video
             src={videoUrl}
-            playsInline
-            style={{ width: "350px" }}
+            playsInline={true}
+            webkit-playsinline={true}
+            style={{ width: "350px", height: "350px"}}
             ref={refVideo}
             onLoadedMetadata={playbackLoaded}
             autoPlay
