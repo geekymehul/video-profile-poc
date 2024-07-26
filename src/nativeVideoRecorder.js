@@ -102,7 +102,6 @@ const NativeVideoRecorder =(props) => {
             }
 
             getFileDuration(URL.createObjectURL(videoBlob)).then(duration => {
-              alert("Video length is "+duration);
             }).catch(err => {
               alert("error occurred "+err);
             });
@@ -150,6 +149,14 @@ const NativeVideoRecorder =(props) => {
     filePlayer.src = fileSrc;
   });
 
+  const playbackLoaded =() => {
+    if(refVideo.current) {
+      currentTime.current = 0;
+      refVideo.current.pause();
+      setIsPlaying(false);
+    }
+  }
+
   React.useEffect(() => {
     if(!refVideo.current)
       return;
@@ -185,6 +192,8 @@ const NativeVideoRecorder =(props) => {
             playsInline
             style={{ width: "350px" }}
             ref={refVideo}
+            onLoadedMetadata={playbackLoaded}
+            autoPlay
             >
           </video>
           <button onClick={playStopVideo}>Play Pause</button>
