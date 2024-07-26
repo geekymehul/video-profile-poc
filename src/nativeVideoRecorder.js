@@ -126,6 +126,7 @@ const NativeVideoRecorder =(props) => {
     const filePlayer = document.createElement("video");
     filePlayer.preload = "metadata";
     filePlayer.autoplay = true;
+    filePlayer.playsinline = true;
   
     const getDuration = e => {
       e.target.currentTime = 0;
@@ -191,7 +192,17 @@ const NativeVideoRecorder =(props) => {
           <button onClick={handleStop}>stop</button>
         </>}
         {videoUrl ? <>
-          <div>Video loaded</div>
+          <video
+            src={videoUrl+"#t=0.1"}
+            playsInline={true}
+            autoPlay={false}
+            style={{ width: "350px", height: "350px"}}
+            ref={refVideo}
+            preload="metadata"
+            onLoadedMetadata={playbackLoaded}
+            key={"recorded"}
+            >
+          </video>
           <button onClick={playStopVideo}>Play Pause</button>
           <a download href={videoUrl}>Native Download Recording</a>
         </> : <video ref={refRecordingElem}
