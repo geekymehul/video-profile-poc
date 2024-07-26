@@ -151,10 +151,7 @@ const NativeVideoRecorder =(props) => {
 
   const playbackLoaded =() => {
     if(refVideo.current) {
-      setTimeout(() => {
-        setIsPlaying(false);
-        refVideo.current.currentTime = 0;
-      },50)
+      alert("playback loaded");
     }
   }
 
@@ -195,7 +192,7 @@ const NativeVideoRecorder =(props) => {
         </>}
         {videoUrl ? <>
           <video
-            src={videoUrl}
+            src={videoUrl+"#t=0.1"}
             playsInline={true}
             autoPlay={false}
             style={{ width: "350px", height: "350px"}}
