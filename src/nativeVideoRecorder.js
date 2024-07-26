@@ -157,6 +157,11 @@ const NativeVideoRecorder =(props) => {
     }
   }
 
+  const onContextMenu =(e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
   React.useEffect(() => {
     if(!refVideo.current)
       return;
@@ -194,6 +199,8 @@ const NativeVideoRecorder =(props) => {
             ref={refVideo}
             onLoadedMetadata={playbackLoaded}
             autoPlay
+            key={"recorded"}
+            onContextMenu={onContextMenu}
             >
           </video>
           <button onClick={playStopVideo}>Play Pause</button>
@@ -201,6 +208,7 @@ const NativeVideoRecorder =(props) => {
         </> : <video ref={refRecordingElem}
                 style={{ width, height }}
                 className="fullscreen-video"
+                key={"recording"}
                 playsInline
                 muted
                 autoPlay />}
