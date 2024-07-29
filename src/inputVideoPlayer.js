@@ -50,7 +50,7 @@ const InputVideoPlayer =(props)=> {
 
     return <div>
         <input id="file" type="file" accept=".mp4, webm, mov" ref={inputRef} onChange={handleChange}/>
-        <video id="video" ref={videoRef} src={videoSrc}></video>
+        <video id="video" ref={videoRef} src={videoSrc} controls></video>
         {compressedFile ? <a download href={compressedFile}>Download compressed file</a> : ""}
     </div>
 
