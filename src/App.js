@@ -26,7 +26,7 @@ function App() {
         {/* <VideoRecorder setActive={setActive}></VideoRecorder> */}
         <br></br>
         <br></br>
-        {/* <InputVideoPlayer></InputVideoPlayer> */}
+        <InputVideoPlayer></InputVideoPlayer>
         {/* <FileCompressor></FileCompressor> */}
         <br></br>
       </>}

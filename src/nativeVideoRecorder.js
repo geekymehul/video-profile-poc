@@ -32,19 +32,16 @@ const NativeVideoRecorder =(props) => {
     let options;
 
     try {
-      // if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
-      //   mimeType = 'video/webm; codecs=vp9';
-      //   options = props.enableCompression ? {mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond : 2000000} : {mimeType: 'video/webm; codecs=vp9'};
-      // } else if (MediaRecorder.isTypeSupported('video/mp4')) {
-      //   mimeType = 'video/mp4';
-      //   options = props.enableCompression ? {mimeType: 'video/mp4', videoBitsPerSecond : 2000000} : {mimeType: 'video/mp4'};
-      // } else {
-      //   alert("Recording Media is not supported in your device!")
-      // }
+      if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
+        mimeType = 'video/webm; codecs=vp9';
+        options = {mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond : 2000000};
+      } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+        mimeType = 'video/mp4';
+        options = {mimeType: 'video/mp4', videoBitsPerSecond : 2000000};
+      } else {
+        alert("Recording Media is not supported in your device!")
+      }
 
-      mimeType = 'video/mp4';
-      options = props.enableCompression ? {mimeType: 'video/mp4', videoBitsPerSecond : 2000000} : {mimeType: 'video/mp4'};
-      
       if(!MediaRecorder) {
         alert("media recorder is not supported");
       }
