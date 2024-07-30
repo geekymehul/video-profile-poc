@@ -51,7 +51,12 @@ const VideoRecorder =(props) => {
     const mediaStream = (await navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
       noiseSuppression: true} }));
     setStream(mediaStream);
-    recorderRef.current = new RecordRTC(mediaStream, options);
+    recorderRef.current = new RecordRTC(stream, {
+      type: 'video',
+      disableLogs: true,
+      mimeType: 'video/mp4',
+      recorderType: RecordRTC.MediaStreamRecorder,
+    });
     recorderRef.current.camera = mediaStream;
     if(recorderRef.current)
         recorderRef.current.startRecording();
@@ -62,7 +67,7 @@ const VideoRecorder =(props) => {
       props.setActive(false);
     }
     recorderRef.current.stopRecording(async () => {
-      const videoBlob = new Blob(videoChunks.current, { type: mimeType });
+      const videoBlob = recorderRef.current.getBlob();
       setBlob(videoBlob);
       getFileDuration(URL.createObjectURL(videoBlob)).then(duration => {
         alert("Video length is "+duration);
