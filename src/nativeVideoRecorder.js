@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import Timer from "./timeCounter";
 
 // let mimeType = 'video/webm;codecs=h264';
 // let mimeType = "video/x-matroska;codecs=avc1";
@@ -39,6 +40,7 @@ const NativeVideoRecorder =(props) => {
   const recorderVideoChunks = useRef([]);
   const currentTime = useRef(0);
   const isOldIos = useRef(isIOS16OrLower());
+  const [isRecording, setIsRecording] = useState(false);
 
   const[isPlaying, setIsPlaying] = useState(false);
 
@@ -79,6 +81,7 @@ const NativeVideoRecorder =(props) => {
 
       navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
         noiseSuppression: true} }).then(mediaStream => {
+          setIsRecording(true);
           // create the recorder
           recorderRef.current = new MediaRecorder(mediaStream, options);
           setStream(mediaStream);
@@ -116,6 +119,7 @@ const NativeVideoRecorder =(props) => {
         recorderRef.current.stop();
         recorderRef.current.onstop = () => {
             //creates a blob file from the videochunks data
+            setIsRecording(false);
             const videoBlob = new Blob(videoChunks.current, { type: mimeType });
             //creates a playable URL from the blob file.
             const videoDownUrl = URL.createObjectURL(videoBlob);
@@ -238,6 +242,7 @@ const NativeVideoRecorder =(props) => {
                 playsInline
                 muted
                 autoPlay />}
+      {isRecording ? <Timer/> : ""}
       </header>
     </div>
   );
