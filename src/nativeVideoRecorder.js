@@ -71,7 +71,7 @@ const NativeVideoRecorder =(props) => {
     //   }
 
     try {
-
+      mimeType = "video/mp4";
       options = {
         mimeType: 'video/mp4',
         videoBitsPerSecond : 1000000,
