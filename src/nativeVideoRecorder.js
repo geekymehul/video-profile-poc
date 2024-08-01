@@ -4,6 +4,27 @@ import React, { useState, useRef } from "react";
 // let mimeType = "video/x-matroska;codecs=avc1";
 let mimeType = 'video/webm;codecs=vp9';
 
+export const isIOS16OrLower =() => {
+  const userAgent = navigator.userAgent;
+  const iosRegex = /iPhone|iPad|iPod/i;
+  const versionRegex = /OS (\d+)_(\d+)/;
+
+  // Check if the user agent indicates iOS
+  if (iosRegex.test(userAgent)) {
+      const match = userAgent.match(versionRegex);
+      if (match) {
+          // Extract the major and minor version numbers
+          const majorVersion = parseInt(match[1], 10);
+
+          // Check if the version is 16 or lower
+          if (majorVersion <= 16) {
+              return true;
+          }
+      }
+  }
+  // user is not iOS
+  return false;
+};
 
 
 const NativeVideoRecorder =(props) => {
@@ -17,6 +38,7 @@ const NativeVideoRecorder =(props) => {
   const videoChunks = useRef([]);
   const recorderVideoChunks = useRef([]);
   const currentTime = useRef(0);
+  const isOldIos = useRef(isIOS16OrLower());
 
   const[isPlaying, setIsPlaying] = useState(false);
 
@@ -31,20 +53,29 @@ const NativeVideoRecorder =(props) => {
     setVideoUrl(null);
     let options;
 
-    try {
-      if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
-        mimeType = 'video/webm; codecs=vp9';
-        options = {mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond : 2000000};
-      } else if (MediaRecorder.isTypeSupported('video/mp4')) {
-        mimeType = 'video/mp4';
-        options = {mimeType: 'video/mp4', videoBitsPerSecond : 2000000};
-      } else {
-        alert("Recording Media is not supported in your device!")
-      }
+    // try {
+    //   if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) {
+    //     mimeType = 'video/webm; codecs=vp9';
+    //     options = {mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond : 2000000};
+    //   } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+    //     mimeType = 'video/mp4';
+    //     options = {mimeType: 'video/mp4', videoBitsPerSecond : 2000000};
+    //   } else {
+    //     alert("Recording Media is not supported in your device!")
+    //   }
 
-      if(!MediaRecorder) {
-        alert("media recorder is not supported");
-      }
+    //   if(!MediaRecorder) {
+    //     alert("media recorder is not supported");
+    //   }
+
+    try {
+
+      options = {
+        mimeType: 'video/mp4',
+        videoBitsPerSecond : 1000000,
+        width: 640,
+        height: 480
+      };
 
       navigator.mediaDevices.getUserMedia({ video: true, audio: {echoCancellation: true,
         noiseSuppression: true} }).then(mediaStream => {
@@ -192,6 +223,7 @@ const NativeVideoRecorder =(props) => {
             preload="metadata"
             onLoadedMetadata={playbackLoaded}
             key={"recorded"}
+            controls={isOldIos.current}
             onError={err => {
               alert('Video load error. ' + err);
             }}

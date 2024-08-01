@@ -66,7 +66,7 @@ const VideoRecorder =(props) => {
     if(props.setActive) {
       props.setActive(false);
     }
-    recorderRef.current.stopRecording(async () => {
+    recorderRef.current.stopRecording( () => {
       const videoBlob = recorderRef.current.getBlob();
       setBlob(videoBlob);
       getFileDuration(URL.createObjectURL(videoBlob)).then(duration => {
