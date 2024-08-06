@@ -6,8 +6,7 @@ const InputVideoPlayer =(props)=> {
     const videoRef = useRef(null);
 
     const [videoSrc , seVideoSrc] = useState("");
-    const [compressedFile,setCompressedFile] = useState("");
-
+  
     const getDuration =(e) => {
       e.target.currentTime = 0;
       var duration = e.target.duration;
@@ -50,8 +49,7 @@ const InputVideoPlayer =(props)=> {
 
     return <div>
         <input id="file" type="file" accept=".mp4, .webm" ref={inputRef} onChange={handleChange}/>
-        <video id="video" ref={videoRef} src={videoSrc} controls playsInline></video>
-        {compressedFile ? <a download href={compressedFile}>Download compressed file</a> : ""}
+        <video id="video" className="video-playback" ref={videoRef} src={videoSrc} controls playsInline></video>
     </div>
 
 };

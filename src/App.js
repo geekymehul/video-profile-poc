@@ -20,13 +20,13 @@ function App() {
         {/* <AudioRecorder></AudioRecorder>
         <br></br> */}
         <br></br>
-        <NativeVideoRecorder enableCompression={true} setActive={setActive}/>
+        {/* <NativeVideoRecorder enableCompression={true} setActive={setActive}/> */}
         <br></br>
         <br></br>
         {/* <VideoRecorder setActive={setActive}></VideoRecorder> */}
         <br></br>
         <br></br>
-        {/* <InputVideoPlayer></InputVideoPlayer> */}
+        <InputVideoPlayer></InputVideoPlayer>
         {/* <FileCompressor></FileCompressor> */}
         <br></br>
       </>}

@@ -54,3 +54,8 @@
 .fullscreen-video {
   object-fit: cover;
 }
+
+.video-playback {
+  height: 300px;
+  width: 300px;
+}
