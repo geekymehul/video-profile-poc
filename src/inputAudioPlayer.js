@@ -49,7 +49,7 @@ const InputAudioPlayer = () => {
 
   return (
     <div>
-      <input type="file" accept="audio/*" onChange={handleFileChange} />
+      <input type="file" accept=".m4a,.mp3,.wav" onChange={handleFileChange} />
       <div ref={wavesurferRef} />
       <button onClick={play}>Play</button>
       <button onClick={pause}>Pause</button>
