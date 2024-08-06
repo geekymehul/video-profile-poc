@@ -45,6 +45,7 @@ const VideoPlayer = () => {
           url={videoUrl}
           playing={playing}
           controls={true}
+          playsinline={true}
           width="100%"
           height="auto"
           onDuration={handleDuration} // Set duration when available
