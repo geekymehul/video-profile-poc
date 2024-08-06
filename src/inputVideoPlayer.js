@@ -36,7 +36,7 @@ const VideoPlayer = () => {
     <div>
       <input
         type="file"
-        accept="video/*"
+        accept=".mkv,.mp4,.mov,.webm"
         onChange={handleFileChange}
       />
       <div>
