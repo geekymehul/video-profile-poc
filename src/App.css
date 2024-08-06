@@ -55,7 +55,7 @@
   object-fit: cover;
 }
 
-.video-playback {
-  height: 300px;
-  width: 300px;
+video {
+  height: 300px !important;
+  width: 300px !important;
 }

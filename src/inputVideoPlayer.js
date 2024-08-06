@@ -1,57 +1,75 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useRef } from 'react';
+import ReactPlayer from 'react-player';
 
-const InputVideoPlayer =(props)=> {
+const VideoPlayer = () => {
+  const [videoUrl, setVideoUrl] = useState('');
+  const [playing, setPlaying] = useState(false);
+  const [duration, setDuration] = useState(null);
+  const [currentTime, setCurrentTime] = useState(0);
+  const playerRef = useRef(null);
 
-    const inputRef = useRef(null);
-    const videoRef = useRef(null);
-
-    const [videoSrc , seVideoSrc] = useState("");
-  
-    const getDuration =(e) => {
-      e.target.currentTime = 0;
-      var duration = e.target.duration;
-      e.target.removeEventListener('timeupdate', getDuration)
-      console.log("duration is "+ duration);
+  // Handle file input change
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      setVideoUrl(url);
     }
-
-    const handleChange = (e) => {
-      const file = e.target.files[0];
-      if(!file)
-        return;
-
-      // convertMP4ToBase64(file);
-
-      const video = document.createElement('video');
-      video.preload = 'metadata';
-      video.autoplay = true;
-
-      video.onloadedmetadata = function() {
-        alert("going here in event");
-        window.URL.revokeObjectURL(video.src);
-        if (video.duration === Infinity) {
-          // fix for bug when duration is wrongly returned
-          video.currentTime = 1e101;
-          video.addEventListener('timeupdate', getDuration)
-        } else {
-          var duration = video.duration;
-          console.log("duration is "+ duration);
-          alert("duration is "+ duration);
-          video.remove();
-        }
-      }
-    
-      const videoUrl = URL.createObjectURL(file);
-
-      video.src = videoUrl;
-
-      seVideoSrc(videoUrl);
   };
 
-    return <div>
-        <input id="file" type="file" accept=".mp4, .webm" ref={inputRef} onChange={handleChange}/>
-        <video id="video" className="video-playback" ref={videoRef} src={videoSrc} controls playsInline></video>
-    </div>
+  // Toggle play/pause
+  const togglePlayPause = () => {
+    setPlaying((prevPlaying) => !prevPlaying);
+  };
 
+  // Update duration when it's available
+  const handleDuration = (duration) => {
+    setDuration(duration);
+  };
+
+  // Update current time on progress
+  const handleProgress = (progress) => {
+    setCurrentTime(progress.playedSeconds);
+  };
+
+  return (
+    <div>
+      <input
+        type="file"
+        accept="video/*"
+        onChange={handleFileChange}
+      />
+      <div>
+        <ReactPlayer
+          ref={playerRef}
+          url={videoUrl}
+          playing={playing}
+          controls={true}
+          width="100%"
+          height="auto"
+          onDuration={handleDuration} // Set duration when available
+          onProgress={handleProgress} // Update current time on progress
+        />
+      </div>
+      <button onClick={togglePlayPause}>
+        {playing ? 'Pause' : 'Play'}
+      </button>
+      <div>
+        {duration !== null && (
+          <p>Total Duration: {formatDuration(duration)}</p>
+        )}
+        <p>Current Time: {formatDuration(currentTime)}</p>
+      </div>
+    </div>
+  );
 };
 
-export default InputVideoPlayer;
+// Helper function to format duration
+const formatDuration = (duration) => {
+  if (!duration) return '0:00';
+  const minutes = Math.floor(duration / 60);
+  const seconds = Math.floor(duration % 60);
+  return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+};
+
+export default VideoPlayer;
