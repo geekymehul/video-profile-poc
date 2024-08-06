@@ -7,6 +7,7 @@ import VideoRecorder from "./videoRecorder";
 import WebcamStreamCapture from "./wbcamLib";
 import { useState } from 'react';
 import FileCompressor from './fileCompressor';
+import InputAudioPlayer from './inputAudioPlayer';
 
 function App() {
 
@@ -26,7 +27,8 @@ function App() {
         {/* <VideoRecorder setActive={setActive}></VideoRecorder> */}
         <br></br>
         <br></br>
-        <InputVideoPlayer></InputVideoPlayer>
+        <InputAudioPlayer/>
+        {/* <InputVideoPlayer></InputVideoPlayer> */}
         {/* <FileCompressor></FileCompressor> */}
         <br></br>
       </>}
