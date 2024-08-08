@@ -18,16 +18,16 @@ function App() {
     <div className="App">
       {/* <TrueCallerSdk/> */}
       {isFullScreen ? <></> : <>
-        {/* <AudioRecorder></AudioRecorder>
-        <br></br> */}
+        {/* <AudioRecorder></AudioRecorder> */}
         <br></br>
-        {/* <NativeVideoRecorder enableCompression={true} setActive={setActive}/> */}
+        <br></br>
+        <NativeVideoRecorder enableCompression={true} setActive={setActive}/>
         <br></br>
         <br></br>
         {/* <VideoRecorder setActive={setActive}></VideoRecorder> */}
         <br></br>
         <br></br>
-        <InputAudioPlayer/>
+        {/* <InputAudioPlayer/> */}
         {/* <InputVideoPlayer></InputVideoPlayer> */}
         {/* <FileCompressor></FileCompressor> */}
         <br></br>
