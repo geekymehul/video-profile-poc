@@ -16,12 +16,13 @@ function App() {
 
   return (
     <div className="App">
-      {/* <TrueCallerSdk/> */}
+      <div>please click on the button to trigger truecaller</div>
+      <TrueCallerSdk/>
       {isFullScreen ? <></> : <>
         {/* <AudioRecorder></AudioRecorder> */}
         <br></br>
         <br></br>
-        <NativeVideoRecorder enableCompression={true} setActive={setActive}/>
+        {/* <NativeVideoRecorder enableCompression={true} setActive={setActive}/> */}
         <br></br>
         <br></br>
         {/* <VideoRecorder setActive={setActive}></VideoRecorder> */}

@@ -34,7 +34,7 @@ const TrueCallerSdk =()=> {
       };
 
       return <div>
-        <input type="text" className="truecaller-input" ref={inputElem}></input>
+        <input type="text" className="truecaller-input" ref={inputElem} style={{display: "none"}}></input>
         <button className="truecaller-sdk" onClick={triggerTrueCallerSdk}>Verify Truecaller</button>
       </div>
 
